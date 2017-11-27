@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Segmento.Domain.TwitterReportLikesByPeriod>
+
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title>Index</title>
+</head>
+<body>
+	<hr />
+	<hr />
+	<table class="table">
+		<tr>
+			<th>
+				Name
+			</th>
+			<th>
+				Count
+			</th>
+			<th>
+				Likes Median
+			</th>
+			<th>
+				Best Period
+			</th>
+
+			<th>
+				Date
+			</th>
+
+			<th></th>
+		</tr>
+
+		@foreach (var item in Model)
+		{
+			<tr>
+				@if (item.reportParts != null && item.reportParts.Count > 0)
+				{
+					<td>
+						@Html.ActionLink(item.UserName, "Details", new { id = item.ID })
+					</td>
+				}
+				else
+				{
+					<td>
+						@Html.DisplayFor(modelItem => item.UserName)
+					</td>
+				}
+				<td>
+					@Html.DisplayFor(modelItem => item.TweetsCount)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.LikesMedian)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.BestTimePeriodText)
+				</td>
+
+				<td>
+					@Html.DisplayFor(modelItem => item.LastUpdateDate)
+				</td>
+			</tr>
+		}
+
+	</table>
+</body>
+</html>

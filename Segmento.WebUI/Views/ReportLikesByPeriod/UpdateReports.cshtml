@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Segmento.Domain.TwitterReportLikesByPeriod>
+
+@{
+//Layout = null;
+}
+@{
+	AjaxOptions ajaxOptions2 = new AjaxOptions
+	{
+		UpdateTargetId = "table"
+	};
+}
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				Name
+			</th>
+			<th>
+				Count
+			</th>
+			<th>
+				Likes Median
+			</th>
+			<th>
+				Best Period
+			</th>
+
+			<th>
+				Date
+			</th>
+
+			<th></th>
+		</tr>
+	</thead>
+	<tbody id="tableBody">
+		@foreach (var item in Model)
+		{
+			<tr>
+				@if (item.reportParts != null && item.reportParts.Count > 0)
+				{
+					<td>
+						@Html.ActionLink(item.UserName, "Details", new { id = item.ID })
+					</td>
+				}
+				else
+				{
+					<td>
+						@Html.DisplayFor(modelItem => item.UserName)
+					</td>
+				}
+				<td>
+					@Html.DisplayFor(modelItem => item.TweetsCount)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.LikesMedian)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.BestTimePeriod)
+				</td>
+
+				<td>
+					@Html.DisplayFor(modelItem => item.LastUpdateDate)
+				</td>
+				<td>
+					@Ajax.ActionLink("Update", "Update", new { id = item.ID }, ajaxOptions2, new { @class = "btn btn-success" })|
+					@Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-default" }) |
+					@Ajax.ActionLink("Delete", "Delete", new { id = item.ID }, ajaxOptions2, new { @class = "btn btn-warning" })
+				</td>
+			</tr>
+		}
+	</tbody>
+
+
+</table>

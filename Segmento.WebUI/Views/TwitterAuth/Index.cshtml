@@ -1,0 +1,32 @@
+﻿
+@model Tweetinvi.Models.IAuthenticatedUser
+<div class="navbar-collapse collapse">
+	<ul class="nav navbar-nav">
+		<li>@Html.ActionLink("Home", "List", "ReportLikesByPeriod")</li>
+		@if (Model != null)
+		{
+			<li>@Html.ActionLink("Administration", "Index", "ReportLikesByPeriod")</li>
+		}
+	</ul>
+
+	@if (Model != null)
+	{
+		<div class="navbar-right">
+
+			@Html.ActionLink("Relogin", "TwitterAuth", "TwitterAuth", new { @class = "btn btn-default navbar-btn" })
+		</div>
+
+			<div class="navbar-right navbar-text">
+				<b>Hello, </b>
+				@Model.Name
+			</div>
+	}
+	else
+	{
+		<div class="navbar-right">
+			@Html.ActionLink("Login", "TwitterAuth", "TwitterAuth", new { @class = "btn btn-default navbar-btn" })
+		</div>
+	}
+
+
+</div>

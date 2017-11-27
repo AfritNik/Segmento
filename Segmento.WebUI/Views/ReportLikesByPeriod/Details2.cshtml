@@ -1,0 +1,105 @@
+﻿@model IEnumerable<Segmento.Domain.TwitterReportPartLikesByHour>
+
+@{
+//Layout = null;
+}
+
+@{
+	double worstMedian = 0;
+	double bestMedian = 0;
+	if (Model.Count() > 0)
+	{
+		worstMedian = Model.Min(r => r.LikesMedian);
+		bestMedian = Model.Max(r => r.LikesMedian);
+		//worstReport = Model.Aggregate((i1, i2) => i1.LikesCount < i2.LikesMedian ? i1 : i2);
+		//bestReport = Model.Aggregate((i1, i2) => i1.LikesCount > i2.LikesMedian ? i1 : i2);
+	}
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title>Details</title>
+</head>
+<body>
+	<div>
+		<hr />
+		<hr />
+		<table class="table">
+			<tr>
+				<th>
+					@Html.DisplayNameFor(model => model.MainReport.UserName)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Hour)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.LikesCount)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.LikesMedian)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.UserName)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.LastUpdateDate)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.TweetsCount)
+				</th>
+				<th></th>
+			</tr>
+
+			@foreach (var item in Model)
+			{
+				var className = "";
+				if (item.LikesMedian == bestMedian)
+				{
+					className = "alert-success";
+				}
+				else if (item.LikesMedian == worstMedian)
+				{
+					className = "alert-danger";
+				}
+
+<tr class="@className">
+					<td>
+						@Html.DisplayFor(modelItem => item.MainReport.UserName)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Hour)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.LikesCount)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.LikesMedian)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.UserName)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.LastUpdateDate)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.TweetsCount)
+					</td>
+				</tr>
+			}
+
+		</table>
+	</div>
+	@if (Segmento.Domain.Settings.CurrentUser == null)
+	{
+@Html.ActionLink("Back to Reports", "List", null, new { @class = "btn btn-info" })
+	}
+	else
+	{
+		@Html.ActionLink("Back to Reports", "Index", null, new { @class = "btn btn-info" })
+	}
+
+</body>
+</html>
